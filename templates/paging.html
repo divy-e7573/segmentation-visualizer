@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Paging Simulator</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <h1>Paging Simulator (FIFO & LRU)</h1>
+
+    <div class="container">
+        <div class="panel">
+            <h2>Inputs</h2>
+
+            <label>Page reference string (space separated pages):</label>
+            <input id="pages" value="1 2 3 2 1 4 1 2 5 4 2" />
+
+            <label>Frames</label>
+            <input id="frames" type="number" value="3" min="1" />
+
+            <label>Algorithm</label>
+            <select id="algorithm">
+                <option>FIFO</option>
+                <option>LRU</option>
+            </select>
+
+            <div class="buttons">
+                <button id="runPage">Run</button>
+                <button id="stepPage">Step</button>
+                <button id="playPage">Play</button>
+                <button id="resetPage">Reset</button>
+            </div>
+
+            <p style="margin-top:12px"><a href="/">← Back to Segmentation</a></p>
+        </div>
+
+        <div class="panel right">
+            <h2>Frames View</h2>
+            <div id="pageFrames" class="framesView"></div>
+
+            <h2>Event Log</h2>
+            <div id="pageLog" class="log"></div>
+
+            <div style="margin-top:12px">
+                Page Faults: <span id="pageFaults">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/paging.js"></script>
+</body>
+</html>
