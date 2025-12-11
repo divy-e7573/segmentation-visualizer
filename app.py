@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 def parse_segments(seg_str):
-    # format: 0-100;1-200;2-150
+    # format: 0-100;1-200;2-150 works according this only
     segments = {}
     if not seg_str.strip():
         return segments
