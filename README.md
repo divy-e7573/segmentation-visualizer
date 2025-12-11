@@ -1,206 +1,203 @@
-📘 Segmentation Address Translation Visualizer
+🧠 Dynamic Memory Management Visualizer
+Segmentation + Paging + Page Fault Simulation (Flask + JavaScript)
 
-A clean, interactive web-based segmentation simulator for Operating Systems labs and academic demonstrations.
+This project is an interactive operating system memory management visualizer that demonstrates:
 
-📌 Overview
+Segmentation
 
-This project is a lightweight, browser-based visualization tool that demonstrates segmentation memory management in Operating Systems. It converts logical addresses (segment number + offset) into physical addresses using a base–limit model, while validating segmentation faults, offset violations, and segment boundaries.
+Paging
 
-It is designed for students, instructors, and OS lab submissions, offering a simple but modern UI using Flask + HTML/CSS/JS.
+Segmented Paging
 
-The goal is to make the core OS memory translation mechanism visual, intuitive, and interactive.
+Page Fault Handling
 
-The repository includes:
+Demand Paging Behavior (FIFO / LRU)
 
-A complete Segmentation Engine (base–limit arithmetic + validation)
+Step-by-step Physical Address Translation
 
-A minimal Flask backend for API handling
-
-A responsive and modern front-end UI
-
-Real-time visualization of segment tables
-
-Highlighted error/success messages
-
-Smooth animations for better understanding
+It provides an easy-to-use graphical interface for entering virtual addresses and instantly seeing how an OS converts them into physical addresses — including detailed breakdowns explaining each step.
 
 🚀 Features
-🔹 Segmentation Engine (Core Logic)
+🔹 1. Segmentation
 
-Converts logical address → physical address
-
-Performs base–limit validation
-
-Detects segmentation faults
-
-Detects offset-out-of-bound errors
-
-Computes base address automatically from segment sizes
-
-Example behavior:
-
-Input: Segment 1, Offset 40
-
-If Segment 1 has base 120 → PA = 120 + 40
-
-🔹 Dynamic Segment Table Visualization
-
-Each segment is displayed with:
-
-Segment ID
-
-Allocated size
-
-Color-coded borders
-
-Rows animate on update to give a clean visual feel
-
-🔹 Error & Success Feedback
-
-Each translation attempt generates one of:
-
-SUCCESS → Valid address
-
-SEGMENT_NOT_FOUND → Invalid segment ID
-
-OUT_OF_BOUNDS → Offset > segment size
-
-SEGMENTATION_FAULT (if extension added)
-
-Messages appear in a highlighted output panel for clarity.
-
-🔹 Modern Web UI
-
-Built using:
-
-HTML5
-
-CSS3 (Dark theme, neon borders, smooth animations)
-
-JavaScript for dynamic updates
-
-Flask backend for processing
-
-UI includes:
-
-Input panel
-
-Segment table panel
-
-Output response panel
-
-Responsive layout
-
-🧩 System Architecture
-Segmentation-Visualizer/
-│
-├── app.py                     → Flask backend & Segmentation engine
-│
-├── static/
-│   ├── style.css              → Modern UI styling (dark + neon)
-│   └── script.js              → Frontend logic & animations
-│
-├── templates/
-│   └── index.html             → Main interface
-│
-└── README.md                  → Documentation
-
-Core Workflow
-
-User enters segments (id-size;id-size;...).
-
-User specifies logical address (segment number + offset).
-
-Frontend sends request → /translate API.
-
-Backend validates segment + offset.
-
-SUCCESS → Physical address returned.
-
-FAIL → Error message generated.
-
-Frontend visualizes segment table + output.
-
-📥 Installation
-1️⃣ Backend Setup
-python -m venv venv
-venv\Scripts\activate      # Windows
-pip install flask
-
-2️⃣ Run Project
-python app.py
-
-3️⃣ View in Browser
-
-Open:
-
-http://127.0.0.1:5000/
-
-▶️ Usage
-Step 1 — Enter the segment table
-
-Format:
-
+User enters segments using the format:
 0-120;1-200;2-150
 
-Step 2 — Enter logical address
+Calculates:
 
-Segment Number:
+Segment base
 
-1
+Offset validation
+
+Logical → physical translation (segmentation stage)
+
+🔹 2. Segmented Paging (Full OS Simulation)
+
+The tool now supports realistic OS paging behavior, including:
+
+Page number calculation
+
+Offset within a page
+
+Frame selection
+
+Page loading into frames
+
+Persistent memory frames (no reset between translations)
+
+Page replacement (FIFO / LRU — configurable)
+
+Accurate physical address computation:
+
+physical = frame_index * page_size + offset_in_page
+
+🔹 3. Page Fault + HIT Visualization
+
+Each address translation produces:
+
+HIT
+
+PAGE_FAULT
+
+Optional: SEG_FAULT or OUT_OF_BOUNDS
+
+The UI displays:
+
+Loaded page
+
+Evicted page (if any)
+
+Updated frame table
+
+Final physical address
+
+Step-by-step educational explanation
+
+🎓 Educational Step-By-Step Breakdown
+
+For each translation, the UI shows:
+
+✔ Segmentation Analysis
+Segment ID: 1
+Offset: 40
+Base = 120 (sum of all previous segments)
+Segmented Address = 120 + 40 = 160
+
+✔ Paging Analysis
+Page Size: 100
+Page Number = 0
+Offset-in-page = 40
+Frame Index = 0
+Final Physical Address = 0 * 100 + 40 = 40
+
+✔ Status
+PAGE FAULT (page was not in memory, loaded into frame 0)
 
 
-Offset:
+or
 
-40
+HIT (page already in memory)
 
-Step 3 — Click Translate Address
+🖥️ Tech Stack
+Backend (Python)
 
-The output will display:
+Flask
 
-Physical Address
+Persistent paging memory state
 
-Base calculation
+FIFO / LRU replacement logic
 
-Validation details
+Segmentation + paging translation engine
 
-Segment table updates in real-time with animations.
+Frontend
+
+HTML, CSS, JavaScript
+
+Dynamic UI updates
+
+Interactive visualization of:
+
+Segment table
+
+Frame table
+
+Page loading/unloading
+
+📂 Project Structure
+segmentation_visualizer/
+│ app.py
+│ README.md
+│
+├── static/
+│     ├── script.js
+│     ├── paging.js
+│     └── style.css
+│
+└── templates/
+      ├── index.html
+      └── paging.html
+
+▶️ How to Run
+1. Install dependencies
+
+(No external libraries required unless you add graphing.)
+
+2. Start the Flask server
+python app.py
+
+3. Open in browser
+http://127.0.0.1:5000/
+
+🧪 Usage Example
+
+Enter:
+
+Segments: 0-120;1-200;2-150
+Segment Number: 1
+Offset: 40
+
+
+Output shows:
+
+Segmentation base calculation
+
+Paging-level breakdown
+
+Page fault/hit
+
+Final physical address
+
+Loaded/evicted pages
+
+Updated frame table
+
+📝 Future Enhancements
+
+Visual memory frame grid
+
+Page replacement animations
+
+TLB simulation
+
+Graphs (page faults vs frames)
+
+Exportable logs for teaching
+
+Dark/light themes
 
 🎯 Purpose
 
-This tool is ideal for:
+This tool is designed for:
 
-Operating Systems lab assignments
+Operating Systems university projects
 
-Academic assessments
+Classroom demonstrations
 
-Visualizing segmentation
+Students learning segmentation & paging
 
-Teaching address translation
-
-Demonstrating base–limit checks
-
-Explaining segmentation faults
-
-Its design emphasizes clarity, step-by-step evaluation, and simplicity, making it perfect for students and instructors.
-
-📎 Future Improvements
-
-Planned enhancements include:
-
-Memory allocation strategies (First Fit, Best Fit, Worst Fit)
-
-Fragmentation visualization
-
-Segmented + Paging hybrid mode
-
-Dark/light mode toggle
-
-Exportable visualization screenshots
-
-Full GUI version (Tkinter / React)
+Visual learners who need step-by-step explanations
 
 🙌 Acknowledgements
 
-Developed as part of an Operating Systems project exploring segmentation and memory management.
-Inspired by classical OS textbooks and academic tools focused on clarity and educational value.
+Thanks to OS teaching principles on segmentation, paging, and virtual memory systems.
+Designed for educational clarity and simplicity.
