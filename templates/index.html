@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Segmentation Address Translation</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+<h1>Segmentation Address Translation</h1>
+
+<div class="container">
+
+    <div class="box">
+        <h2>Segment Input</h2>
+
+        <label>Segments (format: id-size):</label>
+        <input id="segments" value="0-120;1-200;2-150" />
+
+        <label>Segment Number:</label>
+        <input id="seg_id" type="number" value="1" />
+
+        <label>Offset:</label>
+        <input id="offset" type="number" value="40" />
+
+        <button onclick="translateAddress()">Translate Address</button>
+    </div>
+
+    <div class="box">
+        <h2>Segments Table</h2>
+        <div id="table"></div>
+
+        <h2>Output</h2>
+        <div id="output" class="output"></div>
+    </div>
+
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
